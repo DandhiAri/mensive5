@@ -310,7 +310,7 @@
       }
       .env.open .paper {
         transform: translateY(-70px);
-        z-index: 10;
+        z-index: 3;
       }
       #main {
         display: none;
@@ -329,12 +329,12 @@
       }
 
       .experience {
-        width: min(100%, 300px);
+        width: min(100%, 280px);
         position: fixed;
         /* top:50px; */
         bottom: 15px;
         right: 15px;
-        padding: 22px;
+        padding: 18px;
         border: 1px solid #ffffffa8;
         border-radius: 10px;
         /* background: #fffaf5; */
@@ -927,7 +927,8 @@
             id="about-you-audio"
             loop
             preload="metadata"
-            src="./about-you.mp3"
+            type="audio/webm; codecs=opus"
+            src="./about-you.webm"
           ></audio>
           <input
             class="timeline"
@@ -1002,7 +1003,7 @@
       </section>
 
       <section class="reveal" id="sorry" >
-        <div class="wrap" style="z-index:99999">
+        <div class="wrap">
           <h2>Aku ingin bilang sesuatuu,,, 🥺</h2>
           <p>Aku mau minta maaf untuk kejadian kemarin.</p>
           <p>
@@ -1055,9 +1056,9 @@
           </p>
           <p>
             Happy 5th mensive, sayang. 💗 Semoga 5 bulan ini bukan cuma angka
-            yang kita rayakan, tapi bagian kecil dari perjalanan panjang kita.
+            yang kita rayakan, tapi bagian kecil dari perjalanan panjang dan penuh memori indah. Menyelesaikan wishlist kita bareng-bareng, bahagia bareng-bareng, sedih bareng-bareng, semangat bareng-bareng, mimpi bareng-bareng 💚
           </p>
-          <p><b>I Love You</b> so so so much from my deepest heart and a thousand ways to show my love</p>
+          <p><b>I Love You so so so much <br> and <br> sayangg sayangg bangett bangett sama kamuuu</b><br> from my deepest heart and a thousand ways to show my love</p>
           <p style="font-family: Caveat, cursive; font-size: 1.5rem">
             — dari seseorang yang masih belajar menjadi lebih baik untukmu 🐻💚
           </p>
@@ -1097,14 +1098,14 @@
           const image = new Image();
           image.onload = () => resolve(image);
           image.onerror = () => resolve(null);
-          image.src = `img/carousel/${number}.jpg`;
+          image.src = `img/carousel/${number}.avif`;
         });
       }
 
       async function loadCarouselImages() {
         let emptyBatches = 0;
 
-        for (let start = 1; start <= 500; start += 10) {
+        for (let start = 1; start <= 25; start += 10) {
           const batch = await Promise.all(
             Array.from({ length: 10 }, (_, offset) =>
               probeCarouselImage(start + offset),
@@ -1138,37 +1139,37 @@
           i: "📸",
           t: "First memories",
           c: "Awal dari semuanya, seperti anugrah datang ke bumi dan jalan yang indah kelihatan didepan. Aku disitu bersedia menemanimu selalu dengan tujuan buat kamu bahagia dengan cinta tulus ku ini pada saat itu aku tidak berekspetasi mendapatkanmu.",
-          img: "img/ketemu-pertama.jpg",
+          img: "img/ketemu-pertama.avif",
         },
         {
           i: "🎮",
           t: "Random gaming moments",
-          c: "Ditemenin kamu biasanya itu indah, apalagi ditemenin gaming tambah seiindahnya",
-          img: "img/kamu-nunggu-game.jpg",
+          c: "Ditemenin kamu biasanya itu sudah indah banget, apalagi ditemenin mabar tambah seiindahnya",
+          img: "img/kamu-nunggu-game.avif",
         },
         {
           i: "🌙",
-          t: "Ngobrol",
+          t: "Ngobrol tiada henti",
           c: "tidak bosan bosan dengan kamu aja.",
-          img: "img/pantai-papuma-2.jpg",
+          img: "img/pantai-papuma-2.avif",
         },
         {
           i: "😂",
           t: "Teluk Love",
           c: "Serunya mengeksplorasi dan menjelajahi dengan mu, bikin aktivitas dan menjalani aktivitas bersamamu terasa indah",
-          img: "img/teluk-love.jpg",
+          img: "img/teluk-love.avif",
         },
         {
           i: "🥺",
           t: "Momen kangen",
-          c: "Ternyata kangen kamu itu nyata banget.",
-          img: "img/sebelum-kebali.jpg",
+          c: "1 minggu dengan jarak +240km terasa seperti 1 bulan dengan jarak ribuan km, tapi cinta dan ketulusan ini sedekat 0cm",
+          img: "img/sebelum-kebali.avif",
         },
         {
           i: "❤️",
           t: "Momen paling aku suka",
           c: "Kelihatannya biasa aja, tapi aku selalu senyum sendiri. Karena yang bikin spesial bukan tempatnya. Tapi orangnya. 🤍",
-          img: "img/ketemu.jpg",
+          img: "img/ketemu.avif",
         },
       ];
       var $ = function (s) {
@@ -1198,7 +1199,7 @@
       });
 
       // hati melayang
-      var H = ["💗", "💖", "🌷", "✨", "🤍", "🧸", "☁️"];
+      var H = ["💗", "💖", "🌷", "💚", "🤍", "😘", "🧸", "⛰️", "🌹"];
       function heart() {
         var e = document.createElement("span");
         e.className = "h";
