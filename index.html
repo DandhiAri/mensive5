@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>A Little Letter From Me, For You 💗</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        --bg: #fff5f8;
+        --card: #ffffff;
+        --ink: #4a2c2a;
+        --soft: #8a6a68;
+        --pink: #ffc4d6;
+        --rose: #f0567f;
+        --player-surface: #fff0f5;
+        --calm: #f3ecf6;
+        --line: #f7d5e0;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #2a1a20;
+          --card: #3a2530;
+          --ink: #fbe9ee;
+          --soft: #d3aab7;
+          --pink: #7a3a54;
+          --rose: #ff7fa1;
+          --player-surface: #412a35;
+          --calm: #2b2233;
+          --line: #583344;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #2a1a20;
+        --card: #3a2530;
+        --ink: #fbe9ee;
+        --soft: #d3aab7;
+        --pink: #7a3a54;
+        --rose: #ff7fa1;
+        --player-surface: #412a35;
+        --calm: #2b2233;
+        --line: #583344;
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+        scroll-behavior: smooth;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Nunito", system-ui, sans-serif;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Caveat", "Segoe Script", cursive;
+        font-weight: 700;
+        line-height: 1.1;
+        margin: 0 0 0.5em;
+      }
+      h1 {
+        font-size: clamp(2.6rem, 10vw, 4.2rem);
+      }
+      h2 {
+        font-size: clamp(2rem, 7vw, 3rem);
+      }
+      p {
+        margin: 0 0 1em;
+      }
+      b {
+        color: var(--rose);
+      }
+      section {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 72px 22px;
+      }
+      .center {
+        text-align: center;
+      }
+      .btn {
+        font:
+          800 1rem "Nunito",
+          sans-serif;
+        color: #fff;
+        background: var(--rose);
+        border: 0;
+        border-radius: 99px;
+        padding: 14px 28px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(240, 86, 127, 0.3);
+        transition:
+          transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.25s ease,
+          filter 0.25s ease,
+          background 0.25s ease;
+        will-change: transform;
+      }
+      .btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 14px 28px rgba(240, 86, 127, 0.35);
+        filter: saturate(1.1);
+      }
+      .btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--rose);
+        box-shadow: none;
+        border: 2px solid var(--rose);
+      }
+      :focus-visible {
+        outline: 3px solid var(--rose);
+        outline-offset: 3px;
+      }
+      #hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .h {
+        position: absolute;
+        bottom: -40px;
+        animation: up 9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+        opacity: 0.7;
+        filter: drop-shadow(0 10px 12px rgba(240, 86, 127, 0.12));
+        transform-origin: center;
+      }
+      @keyframes up {
+        0% {
+          transform: translate3d(0, 0, 0) rotate(0deg) scale(0.8);
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translate3d(var(--drift, 0px), -118vh, 0) rotate(28deg)
+            scale(1.12);
+          opacity: 0;
+        }
+      }
+      main,
+      #intro {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* intro */
+      #intro {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.8s ease;
+      }
+      #intro.gone {
+        opacity: 0;
+        transform: translateY(-18px);
+        pointer-events: none;
+      }
+      #intro p {
+        max-width: 320px;
+        color: var(--soft);
+      }
+      #intro h1 {
+        animation: fade-slide-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      #intro p {
+        animation: fade-slide-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+      }
+      #intro .env {
+        animation:
+          envelopeFloat 3.2s ease-in-out 0.65s infinite,
+          envelope-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      #intro .btn {
+        animation: fade-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+      }
+      @keyframes fade-slide-up {
+        from {
+          opacity: 0;
+          translate: 0 18px;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @keyframes fade-slide-left {
+        from {
+          opacity: 0;
+          translate: -18px 0;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @keyframes fade-slide-right {
+        from {
+          opacity: 0;
+          translate: 18px 0;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @keyframes envelope-enter {
+        from {
+          opacity: 0;
+          translate: 0 18px;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      .env {
+        position: relative;
+        width: 200px;
+        height: 130px;
+        margin: 26px 0 30px;
+        background: var(--pink);
+        border-radius: 8px;
+        box-shadow: 0 12px 30px rgba(240, 86, 127, 0.25);
+        animation: envelopeFloat 3.2s ease-in-out infinite;
+      }
+      @keyframes envelopeFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .env .paper {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 10px;
+        height: 100px;
+        background: var(--card);
+        border-radius: 6px;
+        transition:
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s,
+          box-shadow 0.4s ease;
+        display: grid;
+        place-items: center;
+        font-size: 1.6rem;
+        box-shadow: 0 10px 18px rgba(74, 44, 42, 0.08);
+      }
+      .env .front {
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, transparent 50%, var(--rose) 50%) left/50%
+            100% no-repeat,
+          linear-gradient(225deg, transparent 50%, var(--rose) 50%) right/50%
+            100% no-repeat;
+        opacity: 0.9;
+        clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+      }
+      .env .flap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 70px;
+        background: var(--rose);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top;
+        transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        z-index: 3;
+        border-radius: 8px 8px 0 0;
+      }
+      .env.open .flap {
+        transform: rotateX(180deg);
+        z-index: 0;
+      }
+      .env.open .paper {
+        transform: translateY(-70px);
+        z-index: 10;
+      }
+      #main {
+        display: none;
+      }
+      #main.show {
+        display: block;
+      }
+      #main.show .experience {
+        animation: fade-slide-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      #main.show .experience :is(.carousel, .audio-player) {
+        animation: fade-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+      }
+      #main.show .experience :is(.slide-caption, .track-label, .track-title, .time-row, .play-button, .volume-button, .audio-message) {
+        animation: fade-slide-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+      }
+
+      .experience {
+        width: min(100%, 300px);
+        position: fixed;
+        /* top:50px; */
+        bottom: 15px;
+        right: 15px;
+        padding: 22px;
+        border: 1px solid #ffffffa8;
+        border-radius: 10px;
+        /* background: #fffaf5; */
+        box-shadow: 0 24px 70px #573a3020;
+      }
+
+      .eyebrow {
+        margin: 0 0 5px;
+        color: #aa695e;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      /* h1 {
+        margin: 0 0 18px;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 1.7rem;
+        font-weight: 600;
+        text-align: center;
+      } */
+
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        border-radius: 6px;
+        background: #ead4ca;
+      }
+
+      .slides-track {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+
+      .slide {
+        position: relative;
+        flex: 0 0 100%;
+        min-width: 0;
+      }
+
+      .slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slide-caption {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        padding: 38px 14px 13px;
+        color: white;
+        font-size: 0.88rem;
+        font-weight: 600;
+        background: linear-gradient(transparent, #1c1716b8);
+      }
+
+      .carousel-button {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        padding: 0;
+        transform: translateY(-50%);
+        border: 1px solid #ffffff80;
+        border-radius: 50%;
+        color: white;
+        background: #211a1870;
+        font: inherit;
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
+
+      .carousel-button:hover {
+        background: #211a18b5;
+      }
+
+      .carousel-button.previous {
+        left: 10px;
+      }
+
+      .carousel-button.next {
+        right: 10px;
+      }
+
+      .carousel-footer {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .indicator {
+        width: 7px;
+        height: 7px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #d6c4bd;
+        cursor: pointer;
+      }
+
+      .indicator[aria-current="true"] {
+        background: #a85e53;
+      }
+
+      .carousel-toggle,
+      .volume-button {
+        padding: 5px;
+        border: 0;
+        color: #715952;
+        background: transparent;
+        font: inherit;
+        font-size: 0.75rem;
+        cursor: pointer;
+      }
+
+      .audio-player {
+        --player-text: var(--ink);
+        --player-muted: var(--soft);
+        --player-accent: var(--rose);
+        margin-top: 11px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--player-text);
+        background: var(--player-surface);
+        box-shadow: 0 10px 24px rgba(240, 86, 127, 0.08);
+      }
+
+      .track-info {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+
+      .track-label {
+        color: var(--player-muted);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .track-title {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 1.12rem;
+      }
+
+      .timeline,
+      .volume-slider {
+        width: 100%;
+        height: 5px;
+        margin: 0;
+        accent-color: var(--player-accent);
+        cursor: pointer;
+      }
+
+      .time-row,
+      .player-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .time-row {
+        margin-top: 4px;
+        color: var(--player-muted);
+        font-size: 0.68rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .player-controls {
+        gap: 12px;
+        /* margin-top: 12px; */
+      }
+
+      .play-button {
+        min-width: 75px;
+        padding: 7px 12px;
+        border: 0;
+        border-radius: 4px;
+        color: #321b24;
+        background: var(--player-accent);
+        font: inherit;
+        font-size: 0.78rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .play-button:hover {
+        background: #ff91ad;
+      }
+
+      .volume-controls {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .volume-button {
+        color: var(--player-text);
+      }
+
+      .volume-slider {
+        max-width: 90px;
+        accent-color: var(--player-accent);
+      }
+
+      .audio-message {
+        /* min-height: 1em; */
+        margin: 9px 0 0;
+        color: #ff9db7;
+        font-size: 0.72rem;
+      }
+
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid #f2b7a2;
+        outline-offset: 3px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* counters */
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+      .stat {
+        background: var(--card);
+        border: 2px solid var(--line);
+        border-radius: 26px;
+        padding: 16px 20px;
+        min-width: 100px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .stat:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(240, 86, 127, 0.08);
+      }
+      .stat b {
+        display: block;
+        font:
+          700 2.6rem "Caveat",
+          cursive;
+        color: var(--rose);
+      }
+      .stat span {
+        font-size: 0.8rem;
+        color: var(--soft);
+        font-weight: 800;
+      }
+
+      /* memories */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .mem {
+        aspect-ratio: 1;
+        perspective: 700px;
+        cursor: pointer;
+        background: none;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+      }
+      .mem .in {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition:
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+      }
+      .mem:hover .in {
+        box-shadow: 0 14px 24px rgba(240, 86, 127, 0.12);
+      }
+      .mem.flip .in {
+        transform: rotateY(180deg);
+      }
+      .mem .f,
+      .mem .k {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        border-radius: 24px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+      }
+      .mem .f {
+        background: var(--card);
+        border: 2px solid var(--line);
+        box-shadow: 0 6px 16px rgba(240, 86, 127, 0.12);
+        font-weight: 800;
+      }
+      .mem .f i {
+        font-style: normal;
+        font-size: 2.2rem;
+      }
+      .mem:nth-child(odd) .f {
+        transform: rotate(-1.5deg);
+      }
+      .mem:nth-child(even) .f {
+        transform: rotate(1.5deg);
+      }
+      .mem .k {
+        transform: rotateY(180deg);
+        background: var(--pink);
+        font-size: 0.85rem;
+        line-height: 1.45;
+        gap: 6px;
+      }
+      .mem .k img {
+        width: 100%;
+        height: 55%;
+        object-fit: cover;
+        border-radius: 14px;
+      }
+      .hint {
+        font-size: 0.85rem;
+        color: var(--soft);
+        margin-top: 14px;
+      }
+
+      /* sorry */
+      #sorry {
+        max-width: none;
+        background: var(--calm);
+        border-radius: 40px 40px 0 0;
+        margin-top: 20px;
+      }
+      #sorry .wrap {
+        max-width: 596px;
+        margin: 0 auto;
+      }
+      .checks {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 20px 22px;
+        margin: 26px 0;
+        list-style: none;
+      }
+      .checks li {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 0;
+        font-weight: 600;
+      }
+      .box {
+        width: 26px;
+        height: 26px;
+        border: 2.5px solid var(--rose);
+        border-radius: 8px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 0.9rem;
+        transition: background 0.3s;
+      }
+      .checks li.on .box {
+        background: var(--rose);
+      }
+      .checks li.on .box:after {
+        content: "✓";
+      }
+      .note {
+        font-family: "Caveat", cursive;
+        font-size: 1.6rem;
+        color: var(--rose);
+        line-height: 1.2;
+      }
+
+      /* reasons */
+      .reasons {
+        display: grid;
+        gap: 14px;
+      }
+      .rs {
+        background: var(--card);
+        border: 2px solid var(--line);
+        border-radius: 26px;
+        padding: 18px 22px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .rs i {
+        font-style: normal;
+        font-size: 2rem;
+      }
+      .rs h3 {
+        font-size: 1.7rem;
+        margin: 0;
+      }
+      .rs p {
+        margin: 0;
+        color: var(--soft);
+      }
+
+      /* promise + letter */
+      .promise {
+        background: var(--card);
+        border: 2px dashed var(--rose);
+        border-radius: 28px;
+        padding: 28px 24px;
+      }
+      .letter {
+        background: #fffdf5;
+        color: #4a2c2a;
+        border-radius: 6px;
+        padding: 34px 26px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+        background-image: repeating-linear-gradient(
+          transparent,
+          transparent 33px,
+          #f3e2d4 34px
+        );
+      }
+      .letter p {
+        line-height: 34px;
+        margin: 0 0 34px;
+      }
+      .letter h2 {
+        color: var(--rose);
+      }
+      .letter b {
+        color: #e0426d;
+      }
+
+      /* ending */
+      #end .card {
+        background: var(--card);
+        border-radius: 30px;
+        padding: 30px 22px;
+        border: 2px solid var(--line);
+      }
+      #result {
+        display: none;
+        margin-top: 22px;
+        text-align: left;
+        background: var(--calm);
+        border-radius: 20px;
+        padding: 20px;
+      }
+      #result.show {
+        display: block;
+        animation: fade-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      #result ul {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+      }
+      .pt {
+        font: 800 1.1rem "Nunito";
+        color: var(--rose);
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn) {
+        animation: fade-slide-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn):nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn):nth-child(3) {
+        animation-delay: 0.16s;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn):nth-child(4) {
+        animation-delay: 0.24s;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn):nth-child(5) {
+        animation-delay: 0.32s;
+      }
+      .reveal.in :is(h1, h2, h3, p, li, .hint, .pt, .stats, #grid, .wrap, .letter, .card, .stat, .mem, .btn):nth-child(n + 6) {
+        animation-delay: 0.4s;
+      }
+      .reveal.in p:nth-of-type(odd),
+      .reveal.in li:nth-child(odd),
+      .reveal.in .mem:nth-child(odd),
+      .reveal.in .stat:nth-child(odd) {
+        animation-name: fade-slide-left;
+      }
+      .reveal.in p:nth-of-type(even),
+      .reveal.in li:nth-child(even),
+      .reveal.in .mem:nth-child(even),
+      .reveal.in .stat:nth-child(even) {
+        animation-name: fade-slide-right;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hearts" aria-hidden="true"></div>
+
+    <div id="intro">
+      <h1>halooo sayangkuu cintakuuu... 👋🏻💗</h1>
+      <p>
+        Aku ngasih ini bukan bunga, bukan cokelat... tapi sedikit kata-kata dari
+        seseorang yang nyebelin ini. 🥺
+      </p>
+      <div class="env" id="env">
+        <div class="paper">💗</div>
+        <div class="front"></div>
+        <div class="flap"></div>
+      </div>
+      <button class="btn" id="openBtn">Buka Suratnya</button>
+    </div>
+
+    <main id="main">
+      <section class="experience">
+        <div
+          class="carousel"
+          aria-label="Photo carousel"
+          aria-roledescription="carousel"
+        >
+          <div class="slides-track">
+          </div>
+        </div>
+
+        <section class="audio-player" aria-label="About You audio player">
+          <div class="track-info">
+            <span class="track-label">Now playing</span>
+            <strong class="track-title">About You - The 1975</strong>
+          </div>
+          <audio
+            id="about-you-audio"
+            loop
+            preload="metadata"
+            src="./about-you.mp3"
+          ></audio>
+          <input
+            class="timeline"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            aria-label="Seek through About You"
+          />
+          <div class="time-row">
+            <span class="current-time">0:00</span>
+            <span class="duration">0:00</span>
+          </div>
+          <div class="player-controls">
+            <button 
+              hidden
+              class="play-button"
+              type="button"
+              aria-label="Play About You"
+            >
+              Play
+            </button>
+            <div class="volume-controls">
+              <button
+                hidden
+                class="volume-button"
+                type="button"
+                aria-label="Mute audio"
+              >
+                Mute
+              </button>
+              <input
+                hidden
+                class="volume-slider"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.50"
+                aria-label="Volume"
+              />
+            </div>
+          </div>
+          <p class="audio-message" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section class="center reveal" id="months">
+        <h1>Happy mensive ke-5, sayang! <3</h1>
+        <p>
+          Di hari 30 september ini, 5 bulan sudah lamanya kita dari kita jadian
+          di tanggal 30 april saat jam 17.59, jika dihitung dengan kita ketemu,
+          kita sudah 6 bulan lamanya. banyak kenangan banyak canda tawa banyak
+          sedih. kita sudah banyak membuat memories bersama dan jelas memories
+          kita masih banyak didepan.
+        </p>
+        <p>
+          if there is thousands of alternate universe, then i love you in every
+          universe and its still not enough for me 🤍
+        </p>
+        <div class="stats">
+          <div class="stat"><b id="cnt">0</b><span>MONTHS</span></div>
+          <div class="stat"><b>∞</b><span>MEMORIES</span></div>
+          <div class="stat"><b>YOU</b><span>PERSON I LOVE</span></div>
+        </div>
+      </section>
+
+      <section class="center reveal" id="memories">
+        <h2>Our Little Memories 📸</h2>
+        <div class="grid" id="grid"></div>
+        <p class="hint">Ketuk kartunya sayanggg <3</p>
+      </section>
+
+      <section class="reveal" id="sorry" >
+        <div class="wrap" style="z-index:99999">
+          <h2>Aku ingin bilang sesuatuu,,, 🥺</h2>
+          <p>Aku mau minta maaf untuk kejadian kemarin.</p>
+          <p>
+            Aku tahu kata <b>“maaf”</b> terdengar sederhana dan nggak otomatis
+            membuat semuanya baik-baik saja.
+          </p>
+          <p>
+            Tapi aku benar-benar menyesal karena apa yang aku lakukan/katakan
+            kemarin sudah membuat kamu merasa nggak nyaman, sedih, kecewa, atau
+            bahkan nggak dihargai.
+          </p>
+          <p>
+            <b>Aku nggak mau membenarkan kesalahanku.</b> Aku cuma ingin kamu
+            tahu kalau aku sadar aku salah, dan aku akan berusaha supaya
+            kejadian seperti itu nggak terulang lagi.
+          </p>
+          <ul class="checks" id="checks">
+            <li><span class="box"></span>Aku mengakui kesalahanku</li>
+            <li><span class="box"></span>Aku nggak menyalahkan kamu</li>
+            <li><span class="box"></span>Aku belajar dari kejadian ini</li>
+            <li><span class="box"></span>Aku akan berusaha memperbaikinya</li>
+            <li class="last">
+              <span class="box"></span>Jadi cowok yang lebih baik buat kamu
+            </li>
+          </ul>
+          <p class="note">
+            Yang terakhir masih kosong... karena itu harus aku buktikan. 🥺
+          </p>
+        </div>
+      </section>
+      <section class="reveal" id="final">
+        <div class="letter">
+          <h2>Dearest, Nabihatul Fa'izah.</h2>
+          <p>
+            My kindest, smartest, funniest, cutest and most beautiful person in the world
+            Sungguh aku lah pira yang sangat beruntung mendapatkan kamu.
+          </p>
+          <p>
+            Terima kasih sudah bertahan sampai 5 bulan ini. Terima kasih sudah
+            menjadi bagian dari hari-hariku.
+          </p>
+          <p>
+            Terima kasih untuk semua tawa, cerita, perhatian, dan bahkan
+            pertengkaran kecil yang akhirnya membuat aku belajar mengenal kamu
+            lebih jauh.
+          </p>
+          <p>
+            Maaf kalau aku masih jauh dari sempurna. Tapi kalau boleh memilih
+            lagi... <b>aku tetap akan memilih kamu.</b>
+          </p>
+          <p>
+            Happy 5th mensive, sayang. 💗 Semoga 5 bulan ini bukan cuma angka
+            yang kita rayakan, tapi bagian kecil dari perjalanan panjang kita.
+          </p>
+          <p><b>I Love You</b> so so so much from my deepest heart and a thousand ways to show my love</p>
+          <p style="font-family: Caveat, cursive; font-size: 1.5rem">
+            — dari seseorang yang masih belajar menjadi lebih baik untukmu 🐻💚
+          </p>
+        </div>
+      </section>
+
+      <section class="center reveal" id="end">
+        <div class="card">
+          <h2>Before you leave...</h2>
+          <p>Aku punya satu pertanyaan. 🥺</p>
+          <button class="btn" id="forgive">💗 Aku maafin kamu</button>
+          <div id="result" aria-live="polite">
+            <h2>🎉 YAY!</h2>
+            <p><b>Boyfriend.exe has received forgiveness.</b></p>
+            <ul>
+              <li>🟢 Happy</li>
+              <li>🟢 Grateful</li>
+              <li>🟢 Still loving you</li>
+              <li>🟢 Will try to behave</li>
+            </ul>
+            <p class="pt">❤️ +1 relationship point</p>
+            <button class="btn ghost" id="again">🔄 Baca lagi dari awal</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const slidesTrack = document.querySelector(".slides-track");
+      const carousel = document.querySelector(".carousel");
+      let slides = [];
+      let activeSlide = 0;
+      let carouselTimer;
+
+      function probeCarouselImage(number) {
+        return new Promise((resolve) => {
+          const image = new Image();
+          image.onload = () => resolve(image);
+          image.onerror = () => resolve(null);
+          image.src = `img/carousel/${number}.jpg`;
+        });
+      }
+
+      async function loadCarouselImages() {
+        let emptyBatches = 0;
+
+        for (let start = 1; start <= 500; start += 10) {
+          const batch = await Promise.all(
+            Array.from({ length: 10 }, (_, offset) =>
+              probeCarouselImage(start + offset),
+            ),
+          );
+          const images = batch.filter(Boolean);
+
+          if (images.length) {
+            emptyBatches = 0;
+            images.forEach((image) => {
+              const slide = document.createElement("div");
+              slide.className = "slide";
+              slide.setAttribute("aria-hidden", "true");
+              image.alt = `Carousel photo ${slidesTrack.children.length + 1}`;
+              slide.appendChild(image);
+              slidesTrack.appendChild(slide);
+            });
+          } else if (++emptyBatches === 3) {
+            break;
+          }
+        }
+
+        slides = [...slidesTrack.querySelectorAll(".slide")];
+        if (slides.length) showSlide(0);
+        else carousel.hidden = true;
+        startCarousel();
+      }
+
+      var MEMORIES = [
+        {
+          i: "📸",
+          t: "First memories",
+          c: "Awal dari semuanya, seperti anugrah datang ke bumi dan jalan yang indah kelihatan didepan. Aku disitu bersedia menemanimu selalu dengan tujuan buat kamu bahagia dengan cinta tulus ku ini pada saat itu aku tidak berekspetasi mendapatkanmu.",
+          img: "img/ketemu-pertama.jpg",
+        },
+        {
+          i: "🎮",
+          t: "Random gaming moments",
+          c: "Ditemenin kamu biasanya itu indah, apalagi ditemenin gaming tambah seiindahnya",
+          img: "img/kamu-nunggu-game.jpg",
+        },
+        {
+          i: "🌙",
+          t: "Ngobrol",
+          c: "tidak bosan bosan dengan kamu aja.",
+          img: "img/pantai-papuma-2.jpg",
+        },
+        {
+          i: "😂",
+          t: "Teluk Love",
+          c: "Serunya mengeksplorasi dan menjelajahi dengan mu, bikin aktivitas dan menjalani aktivitas bersamamu terasa indah",
+          img: "img/teluk-love.jpg",
+        },
+        {
+          i: "🥺",
+          t: "Momen kangen",
+          c: "Ternyata kangen kamu itu nyata banget.",
+          img: "img/sebelum-kebali.jpg",
+        },
+        {
+          i: "❤️",
+          t: "Momen paling aku suka",
+          c: "Kelihatannya biasa aja, tapi aku selalu senyum sendiri. Karena yang bikin spesial bukan tempatnya. Tapi orangnya. 🤍",
+          img: "img/ketemu.jpg",
+        },
+      ];
+      var $ = function (s) {
+        return document.querySelector(s);
+      };
+
+      // kartu kenangan
+      $("#grid").innerHTML = MEMORIES.map(function (m) {
+        return (
+          '<button class="mem" aria-label="' +
+          m.t +
+          '"><div class="in"><div class="f"><i>' +
+          m.i +
+          "</i>" +
+          m.t +
+          '</div><div class="k">' +
+          (m.img ? '<img src="' + m.img + '" alt="">' : "") +
+          "<span>" +
+          m.c +
+          "</span></div></div></button>"
+        );
+      }).join("");
+      document.querySelectorAll(".mem").forEach(function (b) {
+        b.onclick = function () {
+          b.classList.toggle("flip");
+        };
+      });
+
+      // hati melayang
+      var H = ["💗", "💖", "🌷", "✨", "🤍", "🧸", "☁️"];
+      function heart() {
+        var e = document.createElement("span");
+        e.className = "h";
+        e.textContent = H[Math.floor(Math.random() * H.length)];
+        e.style.left = Math.random() * 100 + "%";
+        e.style.fontSize = 12 + Math.random() * 18 + "px";
+        e.style.setProperty("--drift", Math.random() * 80 - 40 + "px");
+        var d = 7 + Math.random() * 7;
+        e.style.animationDuration = d + "s";
+        $("#hearts").appendChild(e);
+        setTimeout(function () {
+          e.remove();
+        }, d * 1000);
+      }
+      setInterval(heart, 900);
+
+      // buka amplop
+      $("#openBtn").onclick = function () {
+        $("#env").classList.add("open");
+        this.disabled = true;
+        audio.play().then(() => {
+          message.textContent = "";
+        }).catch(() => {
+          message.textContent = audio.error
+            ? "Add your About You audio as about-you.mp3 beside this page."
+            : "Autoplay was blocked. Tap Play to start the music.";
+        });
+        setTimeout(function () {
+          $("#intro").classList.add("gone");
+          $("#main").classList.add("show");
+          window.scrollTo(0, 0);
+          watch();
+          setTimeout(function () {
+            $("#intro").style.display = "none";
+          }, 800);
+        }, 1700);
+      };
+
+      // reveal saat di-scroll + animasi khusus
+      function watch() {
+        var io = new IntersectionObserver(
+          function (es) {
+            es.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+              if (e.target.id === "months") count();
+              if (e.target.id === "sorry") ticks();
+            });
+          },
+          { threshold: 0.2 },
+        );
+        document.querySelectorAll(".reveal").forEach(function (s) {
+          io.observe(s);
+        });
+      }
+      function count() {
+        var n = 0,
+          el = $("#cnt"),
+          t = setInterval(function () {
+            n++;
+            el.textContent = "0" + n;
+            if (n >= 5) clearInterval(t);
+          }, 260);
+      }
+      function ticks() {
+        document
+          .querySelectorAll("#checks li:not(.last)")
+          .forEach(function (li, i) {
+            setTimeout(
+              function () {
+                li.classList.add("on");
+              },
+              600 + i * 700,
+            );
+          });
+      }
+
+      // maaf diterima
+      $("#forgive").onclick = function () {
+        this.style.display = "none";
+        $("#result").classList.add("show");
+        for (var i = 0; i < 40; i++) setTimeout(heart, i * 40);
+        $("#result").scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      $("#again").onclick = function () {
+        $("#result").classList.remove("show");
+        $("#forgive").style.display = "";
+        document.querySelectorAll(".mem").forEach(function (m) {
+          m.classList.remove("flip");
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+
+      function showSlide(index) {
+        if (!slides.length) return;
+        activeSlide = (index + slides.length) % slides.length;
+        slidesTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeSlide;
+          slide.classList.toggle("active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+      }
+
+      function startCarousel() {
+        clearInterval(carouselTimer);
+        if (slides.length < 2 || document.hidden) return;
+        carouselTimer = setInterval(() => showSlide(activeSlide + 1), 5000);
+      }
+
+      loadCarouselImages();
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) clearInterval(carouselTimer);
+        else startCarousel();
+      });
+      startCarousel();
+
+      const audio = document.querySelector("#about-you-audio");
+      const playButton = document.querySelector(".play-button");
+      const timeline = document.querySelector(".timeline");
+      const volumeSlider = document.querySelector(".volume-slider");
+      const volumeButton = document.querySelector(".volume-button");
+      const message = document.querySelector(".audio-message");
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds)) return "0:00";
+        const minutes = Math.floor(seconds / 60);
+        return `${minutes}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+      }
+
+      function updatePlayButton() {
+        playButton.textContent = audio.paused ? "Play" : "Pause";
+        playButton.setAttribute(
+          "aria-label",
+          `${audio.paused ? "Play" : "Pause"} About You`,
+        );
+      }
+
+      audio.volume = Number(volumeSlider.value);
+      audio.addEventListener("loadedmetadata", () => {
+        document.querySelector(".duration").textContent = formatTime(
+          audio.duration,
+        );
+        message.textContent = "";
+      });
+      audio.addEventListener("timeupdate", () => {
+        document.querySelector(".current-time").textContent = formatTime(
+          audio.currentTime,
+        );
+        timeline.value = audio.duration
+          ? String((audio.currentTime / audio.duration) * 100)
+          : "0";
+      });
+      audio.addEventListener("play", updatePlayButton);
+      audio.addEventListener("pause", updatePlayButton);
+      audio.addEventListener("ended", updatePlayButton);
+      audio.addEventListener("error", () => {
+        message.textContent =
+          "Add your About You audio as about-you.mp3 beside this page.";
+      });
+
+      playButton.addEventListener("click", async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            message.textContent = "";
+          } catch {
+            message.textContent =
+              "Add your About You audio as about-you.mp3 beside this page.";
+          }
+        } else {
+          audio.pause();
+        }
+      });
+      timeline.addEventListener("input", () => {
+        if (audio.duration)
+          audio.currentTime = (Number(timeline.value) / 100) * audio.duration;
+      });
+      volumeSlider.addEventListener("input", () => {
+        audio.volume = Number(volumeSlider.value);
+        audio.muted = audio.volume === 0;
+        volumeButton.textContent = audio.muted ? "Unmute" : "Mute";
+      });
+      volumeButton.addEventListener("click", () => {
+        audio.muted = !audio.muted;
+        volumeButton.textContent = audio.muted ? "Unmute" : "Mute";
+      });
+    </script>
+  </body>
+</html>
