@@ -926,7 +926,7 @@
           <audio
             id="about-you-audio"
             loop
-            preload="metadata"
+            preload="none"
             type="audio/webm; codecs=opus"
             src="./about-you.webm"
           ></audio>
@@ -1092,46 +1092,58 @@
       let slides = [];
       let activeSlide = 0;
       let carouselTimer;
+      const carouselImages = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, 24, 25,
+      ];
+      const initialCarouselCount = 4;
 
-      function probeCarouselImage(number) {
-        return new Promise((resolve) => {
-          const image = new Image();
-          image.onload = () => resolve(image);
-          image.onerror = () => resolve(null);
-          image.src = `img/carousel/${number}.avif`;
-        });
+      function createCarouselSlide(number, index) {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        slide.setAttribute("aria-hidden", "true");
+
+        const image = document.createElement("img");
+        image.src = `img/carousel/${number}.avif`;
+        image.alt = `Carousel photo ${index + 1}`;
+        image.loading = number <= initialCarouselCount ? "eager" : "lazy";
+        image.decoding = "async";
+        image.fetchPriority = number <= initialCarouselCount ? "high" : "low";
+        image.style.display = "block";
+        image.style.width = "100%";
+        image.style.height = "100%";
+        image.style.objectFit = "cover";
+
+        slide.appendChild(image);
+        return slide;
       }
 
-      async function loadCarouselImages() {
-        let emptyBatches = 0;
+      function loadCarouselImages() {
+        const initialSlides = carouselImages.slice(0, initialCarouselCount);
+        const remainingSlides = carouselImages.slice(initialCarouselCount);
 
-        for (let start = 1; start <= 25; start += 10) {
-          const batch = await Promise.all(
-            Array.from({ length: 10 }, (_, offset) =>
-              probeCarouselImage(start + offset),
-            ),
-          );
-          const images = batch.filter(Boolean);
-
-          if (images.length) {
-            emptyBatches = 0;
-            images.forEach((image) => {
-              const slide = document.createElement("div");
-              slide.className = "slide";
-              slide.setAttribute("aria-hidden", "true");
-              image.alt = `Carousel photo ${slidesTrack.children.length + 1}`;
-              slide.appendChild(image);
-              slidesTrack.appendChild(slide);
-            });
-          } else if (++emptyBatches === 3) {
-            break;
-          }
-        }
+        initialSlides.forEach((number, index) => {
+          slidesTrack.appendChild(createCarouselSlide(number, index));
+        });
 
         slides = [...slidesTrack.querySelectorAll(".slide")];
-        if (slides.length) showSlide(0);
-        else carousel.hidden = true;
+        if (!slides.length) {
+          carousel.hidden = true;
+          return;
+        }
+
+        showSlide(0);
         startCarousel();
+
+        remainingSlides.forEach((number, index) => {
+          setTimeout(() => {
+            if (!slidesTrack) return;
+            slidesTrack.appendChild(
+              createCarouselSlide(number, slides.length + index),
+            );
+            slides = [...slidesTrack.querySelectorAll(".slide")];
+          }, 600 + index * 180);
+        });
       }
 
       var MEMORIES = [
@@ -1186,7 +1198,9 @@
           "</i>" +
           m.t +
           '</div><div class="k">' +
-          (m.img ? '<img src="' + m.img + '" alt="">' : "") +
+          (m.img
+            ? '<img src="' + m.img + '" alt="" loading="lazy" decoding="async" fetchpriority="low">'
+            : "") +
           "<span>" +
           m.c +
           "</span></div></div></button>"
@@ -1220,6 +1234,7 @@
       $("#openBtn").onclick = function () {
         $("#env").classList.add("open");
         this.disabled = true;
+        audio.load();
         audio.play().then(() => {
           message.textContent = "";
         }).catch(() => {
