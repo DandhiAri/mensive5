@@ -7,6 +7,8 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <title>A Little Letter From Me, For You 💗</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;800&display=swap"
       rel="stylesheet"
@@ -66,6 +68,10 @@
         font-family: "Nunito", system-ui, sans-serif;
         line-height: 1.7;
         overflow-x: hidden;
+      }
+      img {
+        max-width: 100%;
+        display: block;
       }
       h1,
       h2,
@@ -318,6 +324,9 @@
       #main.show {
         display: block;
       }
+      #memories {
+        contain: layout;
+      }
       #main.show .experience {
         animation: fade-slide-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
       }
@@ -365,6 +374,7 @@
         aspect-ratio: 4 / 3;
         border-radius: 6px;
         background: #ead4ca;
+        contain: layout paint size;
       }
 
       .slides-track {
@@ -372,12 +382,15 @@
         width: 100%;
         height: 100%;
         transition: transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        will-change: transform;
       }
 
       .slide {
         position: relative;
         flex: 0 0 100%;
         min-width: 0;
+        aspect-ratio: 4 / 3;
+        background: #ead4ca;
       }
 
       .slide img {
@@ -385,6 +398,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        background: #ead4ca;
       }
 
       .slide-caption {
@@ -625,6 +639,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 14px;
+        min-height: clamp(280px, 44vw, 420px);
       }
       .mem {
         aspect-ratio: 1;
@@ -877,6 +892,92 @@
         animation-name: fade-slide-right;
       }
 
+      @media (max-width: 640px) {
+        section {
+          padding: 52px 16px;
+        }
+
+        #grid {
+          min-height: 360px;
+        }
+
+        #intro {
+          padding: 20px 16px;
+        }
+
+        #intro h1 {
+          font-size: clamp(2.3rem, 11vw, 3.2rem);
+        }
+
+        #intro p {
+          max-width: 280px;
+        }
+
+        .experience {
+          position: static;
+          width: min(100%, 360px);
+          margin: 18px auto 0;
+          padding: 12px;
+          right: auto;
+          bottom: auto;
+        }
+
+        .audio-player {
+          padding: 12px;
+        }
+
+        .player-controls {
+          gap: 8px;
+        }
+
+        .play-button {
+          min-width: 68px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          gap: 10px;
+        }
+
+        .stat {
+          flex: 1 1 30%;
+          min-width: 0;
+          padding: 12px 14px;
+        }
+
+        .stat b {
+          font-size: 2.2rem;
+        }
+
+        .checks {
+          padding: 16px 14px;
+        }
+
+        .checks li {
+          align-items: flex-start;
+        }
+
+        .letter {
+          padding: 20px 16px;
+        }
+
+        .letter p {
+          line-height: 28px;
+        }
+
+        #end .card {
+          padding: 22px 16px;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 260px;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         * {
           animation: none !important;
@@ -1038,8 +1139,8 @@
         <div class="letter">
           <h2>Dearest, Nabihatul Fa'izah.</h2>
           <p>
-            My kindest, smartest, funniest, cutest and most beautiful person in the world
-            Sungguh aku lah pira yang sangat beruntung mendapatkan kamu.
+            My kindest, smartest, funniest, cutest and most beautiful person in the world.
+            Sungguh aku lah pria yang sangat beruntung mendapatkan kamu.
           </p>
           <p>
             Terima kasih sudah bertahan sampai 5 bulan ini. Terima kasih sudah
@@ -1093,37 +1194,49 @@
       let activeSlide = 0;
       let carouselTimer;
       const carouselImages = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
         20, 21, 22, 23, 24, 25,
       ];
       const initialCarouselCount = 4;
 
-      function createCarouselSlide(number, index) {
+      function createCarouselSlide(number, index, eager = false) {
         const slide = document.createElement("div");
         slide.className = "slide";
         slide.setAttribute("aria-hidden", "true");
 
         const image = document.createElement("img");
-        image.src = `img/carousel/${number}.avif`;
+        const src = `img/carousel/${number}.avif`;
         image.alt = `Carousel photo ${index + 1}`;
-        image.loading = number <= initialCarouselCount ? "eager" : "lazy";
+        image.width = 1200;
+        image.height = 900;
+        image.loading = eager ? "eager" : "lazy";
         image.decoding = "async";
-        image.fetchPriority = number <= initialCarouselCount ? "high" : "low";
+        image.fetchPriority = eager ? "high" : "low";
+        image.dataset.src = src;
+        image.src = eager ? src : "";
         image.style.display = "block";
         image.style.width = "100%";
         image.style.height = "100%";
         image.style.objectFit = "cover";
+        image.style.background = "#ead4ca";
 
         slide.appendChild(image);
         return slide;
       }
 
-      function loadCarouselImages() {
-        const initialSlides = carouselImages.slice(0, initialCarouselCount);
-        const remainingSlides = carouselImages.slice(initialCarouselCount);
+      function hydrateCarouselSlide(slide) {
+        if (!slide || slide.dataset.loaded === "true") return;
+        const image = slide.querySelector("img");
+        if (!image || !image.dataset.src) return;
+        image.src = image.dataset.src;
+        slide.dataset.loaded = "true";
+      }
 
-        initialSlides.forEach((number, index) => {
-          slidesTrack.appendChild(createCarouselSlide(number, index));
+      function loadCarouselImages() {
+        carouselImages.forEach((number, index) => {
+          slidesTrack.appendChild(
+            createCarouselSlide(number, index, index < initialCarouselCount),
+          );
         });
 
         slides = [...slidesTrack.querySelectorAll(".slide")];
@@ -1135,14 +1248,10 @@
         showSlide(0);
         startCarousel();
 
-        remainingSlides.forEach((number, index) => {
-          setTimeout(() => {
-            if (!slidesTrack) return;
-            slidesTrack.appendChild(
-              createCarouselSlide(number, slides.length + index),
-            );
-            slides = [...slidesTrack.querySelectorAll(".slide")];
-          }, 600 + index * 180);
+        slides.forEach((slide, index) => {
+          if (index >= initialCarouselCount) {
+            setTimeout(() => hydrateCarouselSlide(slide), 150 + index * 80);
+          }
         });
       }
 
@@ -1228,7 +1337,7 @@
           e.remove();
         }, d * 1000);
       }
-      setInterval(heart, 900);
+      setInterval(heart, 1400);
 
       // buka amplop
       $("#openBtn").onclick = function () {
@@ -1297,7 +1406,7 @@
       $("#forgive").onclick = function () {
         this.style.display = "none";
         $("#result").classList.add("show");
-        for (var i = 0; i < 40; i++) setTimeout(heart, i * 40);
+        for (var i = 0; i < 20; i++) setTimeout(heart, i * 60);
         $("#result").scrollIntoView({ behavior: "smooth", block: "center" });
       };
       $("#again").onclick = function () {
@@ -1312,18 +1421,21 @@
       function showSlide(index) {
         if (!slides.length) return;
         activeSlide = (index + slides.length) % slides.length;
-        slidesTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
+        slidesTrack.style.transform = `translate3d(-${activeSlide * 100}%, 0, 0)`;
         slides.forEach((slide, slideIndex) => {
           const isActive = slideIndex === activeSlide;
           slide.classList.toggle("active", isActive);
           slide.setAttribute("aria-hidden", String(!isActive));
+          if (isActive) hydrateCarouselSlide(slide);
         });
       }
 
       function startCarousel() {
         clearInterval(carouselTimer);
         if (slides.length < 2 || document.hidden) return;
-        carouselTimer = setInterval(() => showSlide(activeSlide + 1), 5000);
+        carouselTimer = setInterval(() => {
+          showSlide(activeSlide + 1);
+        }, 4500);
       }
 
       loadCarouselImages();
